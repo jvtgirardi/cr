@@ -1,0 +1,149 @@
+.suggestions-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.suggestions-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 30px;
+}
+
+.suggestion-card {
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.suggestion-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.suggestion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 25px;
+}
+
+.suggestion-body {
+  display: flex;
+  padding: 25px;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.suggestion-info h3 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.target-pill {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.suggestion-footer {
+  display: flex;
+  gap: 25px;
+  padding: 12px 25px;
+}
+
+.footer-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.footer-stat.clickable:hover {
+  color: var(--primary);
+  transform: scale(1.05);
+}
+
+.suggestion-history {
+  padding: 25px;
+  height: fit-content;
+  position: sticky;
+  top: 30px;
+}
+
+.history-item {
+  transition: all 0.2s;
+}
+
+.history-item:hover {
+  background: rgba(255,255,255,0.05) !important;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-group label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* Header Filters consistency */
+.header-filters {
+  display: flex;
+  gap: 15px;
+  padding: 12px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.date-range-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-picker-mini {
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.date-separator {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+  .suggestions-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .suggestion-history {
+    position: static;
+  }
+}

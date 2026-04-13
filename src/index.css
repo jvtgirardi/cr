@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #5CE1E6;
+  --primary-rgb: 92, 225, 230;
+  --bg-dark: #000000;
+  --bg-darker: #050505;
+  --card-bg: rgba(28, 28, 30, 0.7);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text-main: #FFFFFF;
+  --text-muted: #8E8E93;
+  --sidebar-width-collapsed: 80px;
+  --sidebar-width-expanded: 260px;
+  --transition-speed: 0.3s;
+  
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --calendar-icon-filter: invert(1);
+  
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
+}
+
+.light-mode {
+  --bg-dark: #F2F2F7;
+  --bg-darker: #FFFFFF;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-border: rgba(0, 0, 0, 0.05);
+  --text-main: #000000;
+  --text-muted: #636366;
+  --calendar-icon-filter: invert(0);
+  color-scheme: light;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color var(--transition-speed);
+}
+
+#root {
+  display: flex;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width-collapsed);
+  padding: var(--spacing-xl);
+  min-height: 100vh;
+  transition: margin-left var(--transition-speed);
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+}
+
+.neon-shadow {
+  box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.2);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.accent-text {
+  color: var(--primary);
+}
+
+.gradient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: radial-gradient(circle at 80% 20%, rgba(var(--primary-rgb), 0.15) 0%, transparent 40%),
+              radial-gradient(circle at 20% 80%, rgba(var(--primary-rgb), 0.1) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* Smooth Interactive Elements */
+.glass-input, .glass-select, .glass-input-small, select.glass, .search-bar.glass {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  border-radius: 12px;
+  padding: 10px 15px;
+  outline: none;
+  transition: all 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Ensure options are legible */
+.glass-select option, select.glass option {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.light-mode .glass-select option, 
+.light-mode select.glass option {
+  background-color: #fff;
+  color: #000;
+}
+
+.light-mode .glass-input, 
+.light-mode .glass-select, 
+.light-mode .glass-input-small, 
+.light-mode select.glass, 
+.light-mode .search-bar.glass {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--text-main);
+}
+
+.search-bar.glass {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 15px;
+  height: 44px;
+}
+
+.search-bar.glass input {
+  background: transparent;
+  border: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+.glass-input:focus, .glass-select:focus, select.glass:focus, .search-bar.glass:focus-within {
+  border-color: var(--primary);
+  background: rgba(var(--primary-rgb), 0.05);
+  box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.1);
+}
+
+/* Global Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  padding: 20px;
+}
+
+.light-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-content.glass {
+  background: var(--bg-darker);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Dropdown and Overlays */
+.drill-dropdown.glass {
+  background: var(--bg-darker) !important;
+  border: 1px solid var(--card-border) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  color: var(--text-main);
+}
+
+.light-mode .drill-dropdown.glass {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease forwards;
+}

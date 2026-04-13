@@ -1,0 +1,186 @@
+.dashboard-page {
+  animation: fadeIn 0.5s ease;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.welcome-text {
+  font-size: 32px;
+  color: var(--text-main);
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 15px;
+}
+
+.premium-badge {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
+}
+
+.user-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+}
+
+.section-title {
+  margin-bottom: var(--spacing-md);
+  font-size: 18px;
+  color: var(--text-main);
+  opacity: 0.9;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.card-header h3 {
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+.stats-card {
+  padding: var(--spacing-lg);
+}
+
+.stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.stat-divider {
+  width: 1px;
+  height: 60px;
+  background: var(--card-border);
+}
+
+.suggestions-card {
+  padding: var(--spacing-lg);
+}
+
+.suggestion-item {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.chart-card {
+  padding: var(--spacing-lg);
+  height: 100%;
+}
+
+.activity-list {
+  padding: var(--spacing-lg);
+}
+
+.activity-item {
+  display: grid;
+  grid-template-columns: 200px 1fr 60px;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.coach-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.rank {
+  font-size: 14px;
+  color: var(--text-muted);
+  width: 20px;
+}
+
+.avatar-placeholder {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(var(--primary-rgb), 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.coach-name {
+  font-weight: 600;
+}
+
+.activity-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  margin: 0 20px;
+  overflow: hidden;
+}
+
+.track-progress {
+  height: 100%;
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.3);
+}
+
+.activity-count {
+  font-weight: 700;
+  text-align: right;
+}
+
+.mt-lg { margin-top: var(--spacing-lg); }
+.mt-xl { margin-top: var(--spacing-xl); }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.gap-sm { gap: var(--spacing-sm); }

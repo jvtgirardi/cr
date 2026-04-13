@@ -1,0 +1,246 @@
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.add-coach-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+.add-coach-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4);
+}
+
+.coaches-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--spacing-xl);
+}
+
+.filters-sidebar {
+  padding: var(--spacing-lg);
+  height: fit-content;
+}
+
+.filters-sidebar h3 {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.filter-group {
+  margin-bottom: 25px;
+}
+
+.filter-group label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 10px;
+  color: var(--text-main);
+  outline: none;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-main);
+  text-transform: none;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.coaches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.coach-card {
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  transition: transform 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+}
+
+.coach-card:hover {
+  transform: translateX(10px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.coach-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 18px;
+  margin-right: 20px;
+  overflow: hidden;
+}
+
+.coach-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coach-main-info {
+  flex: 1;
+}
+
+.coach-main-info h4 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.coach-main-info p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.coach-stats {
+  display: flex;
+  gap: 30px;
+  margin: 0 40px;
+}
+
+.mini-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mini-stat .value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.mini-stat .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.view-details-btn {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.coach-card:hover .view-details-btn {
+  color: var(--primary);
+}
+
+.coach-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.edit-btn, .delete-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(var(--primary-rgb), 0.1);
+}
+
+.delete-btn:hover {
+    border-color: #ff453a;
+    color: #ff453a;
+    background: rgba(255, 69, 58, 0.1);
+}
+
+.coach-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.coach-form .full-width {
+    grid-column: span 2;
+}
+
+/* Photo Upload Styles */
+.file-upload-container {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.file-label {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+}
+
+.image-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.image-preview img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+}
