@@ -1024,7 +1024,7 @@ const TrainingSessions = () => {
               <div className="glass" style={{ padding: '4px 12px', borderRadius: '12px', background: 'rgba(255,255,255,0.03)' }}>
                 <select className="glass-select" value={athleteFilterCategory} onChange={(e) => setAthleteFilterCategory(e.target.value)} style={{ padding: '8px 10px', background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>
                   <option value="All">All Categories</option>
-                  {Object.keys(mockPlayersByCategory).map(cat => <option key={cat} value={cat} style={{ background: '#111' }}>{cat}</option>)}
+                  {Object.keys(playersByCategory).map(cat => <option key={cat} value={cat} style={{ background: '#111' }}>{cat}</option>)}
                 </select>
               </div>
               <button 
