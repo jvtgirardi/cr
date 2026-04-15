@@ -32,13 +32,40 @@ const Dashboard = () => {
 
   const [coaches] = React.useState(() => {
     const saved = localStorage.getItem('coaches_data');
-    return saved ? JSON.parse(saved) : [
-      { name: 'Ilir Selmani', sessions: 86 },
-      { name: 'Ludovic', sessions: 12 },
-      { name: 'Alessandro Rama', sessions: 5 },
-      { name: 'Déborah Bouillane', sessions: 5 },
-    ];
+    return saved ? JSON.parse(saved) : [];
   });
+
+  const [libraryDrills] = React.useState(() => {
+    const saved = localStorage.getItem('training_library_data');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [trainingSessions] = React.useState(() => {
+    const saved = localStorage.getItem('training_sessions_data');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [suggestions] = React.useState(() => {
+    const saved = localStorage.getItem('club_suggestions');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Calculate stats
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
+  
+  const sessionsThisMonth = trainingSessions.filter(session => {
+    const date = new Date(session.date + 'T00:00:00');
+    return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+  }).length;
+
+  const today = new Date().toISOString().split('T')[0];
+  const activeSuggestionsCount = suggestions.filter(s => s.endDate >= today).length;
+
+  const coachActivityData = coaches.map(coach => {
+    const drillCount = libraryDrills.filter(drill => drill.coach === coach.name).length;
+    return { ...coach, drillCount };
+  }).sort((a, b) => b.drillCount - a.drillCount).slice(0, 4);
 
   // Dynamic players by group calculation
   const categories = ['u12', 'u14', 'u16', 'u18', 'u20', 'senior'];
@@ -82,12 +109,12 @@ const Dashboard = () => {
             </div>
             <div className="stats-row">
               <div className="stat-item">
-                <span className="stat-value">12</span>
+                <span className="stat-value">{sessionsThisMonth}</span>
                 <span className="stat-label">this month</span>
               </div>
               <div className="stat-divider"></div>
               <div className="stat-item">
-                <span className="stat-value">11</span>
+                <span className="stat-value">{coaches.length}</span>
                 <span className="stat-label">active trainers</span>
               </div>
             </div>
@@ -106,7 +133,7 @@ const Dashboard = () => {
               <ChevronRight size={20} />
             </div>
             <div className="suggestion-item">
-              <span className="suggestion-count">1 Active suggestions</span>
+              <span className="suggestion-count">{activeSuggestionsCount} Active suggestions</span>
             </div>
           </div>
         </div>
@@ -150,7 +177,7 @@ const Dashboard = () => {
           onClick={() => navigate('/library')}
           style={{ cursor: 'pointer' }}
         >
-          {sortedCoaches.map((coach, index) => (
+          {coachActivityData.length > 0 ? coachActivityData.map((coach, index) => (
             <div key={coach.name} className="activity-item">
               <div className="coach-info">
                 <div className="rank">{index + 1}</div>
@@ -161,14 +188,18 @@ const Dashboard = () => {
                 <div 
                   className="track-progress" 
                   style={{ 
-                    width: `${(coach.sessions / (sortedCoaches[0]?.sessions || 1)) * 100}%`,
+                    width: `${(coach.drillCount / (coachActivityData[0]?.drillCount || 1)) * 100}%`,
                     backgroundColor: primaryColor
                   }}
                 ></div>
               </div>
-              <span className="activity-count">{coach.sessions}</span>
+              <span className="activity-count">{coach.drillCount}</span>
             </div>
-          ))}
+          )) : (
+            <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-muted)' }}>
+               No activities recorded in the library yet.
+            </div>
+          )}
         </div>
       </div>
     </div>
