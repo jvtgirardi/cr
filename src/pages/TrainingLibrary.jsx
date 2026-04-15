@@ -27,21 +27,35 @@ const coachesData = [
   { id: 6, name: 'Selmani Arianit' },
 ];
 
+
+
 const initialSessionsData = initialTrainingsLibraryData;
 
 const TrainingLibrary = () => {
   const { primaryColor } = useTheme();
-  const [sessions, setSessions] = useState(initialSessionsData);
+  const [sessions, setSessions] = useState(() => {
+    const saved = localStorage.getItem('training_library_data');
+    return saved ? JSON.parse(saved) : initialSessionsData;
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem('training_library_data', JSON.stringify(sessions));
+  }, [sessions]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('add'); // 'add' or 'edit'
   const [selectedTraining, setSelectedTraining] = useState(null);
   const [commentText, setCommentText] = useState('');
   
+  const [coaches] = useState(() => {
+    const saved = localStorage.getItem('coaches_data');
+    return saved ? JSON.parse(saved) : coachesData;
+  });
+
   const [editingTraining, setEditingTraining] = useState(null);
   const [newTraining, setNewTraining] = useState({
     title: '',
     description: '',
-    coach: coachesData[0].name,
+    coach: coaches[0]?.name || 'Coach',
     category: 'U18',
     videoUrl: '',
     image: null
@@ -68,7 +82,7 @@ const TrainingLibrary = () => {
     setNewTraining({
       title: '',
       description: '',
-      coach: coachesData[0].name,
+      coach: coaches[0]?.name || 'Coach',
       category: 'U18',
       videoUrl: '',
       image: null,
@@ -217,7 +231,7 @@ const TrainingLibrary = () => {
                 onChange={(e) => setFilterCoach(e.target.value)}
               >
                 <option value="All">All Coaches</option>
-                {coachesData.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                {coaches.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
               </select>
             </div>
 
@@ -396,7 +410,7 @@ const TrainingLibrary = () => {
                     value={newTraining.coach}
                     onChange={(e) => setNewTraining({...newTraining, coach: e.target.value})}
                   >
-                    {coachesData.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                    {coaches.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                   </select>
                 </div>
 

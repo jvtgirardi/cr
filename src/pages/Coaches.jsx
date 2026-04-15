@@ -31,7 +31,14 @@ const coachesData = [
 
 const Coaches = () => {
   const { primaryColor } = useTheme();
-  const [coaches, setCoaches] = useState(coachesData);
+  const [coaches, setCoaches] = useState(() => {
+    const saved = localStorage.getItem('coaches_data');
+    return saved ? JSON.parse(saved) : coachesData;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('coaches_data', JSON.stringify(coaches));
+  }, [coaches]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isModalOpen, setIsModalOpen] = useState(false);

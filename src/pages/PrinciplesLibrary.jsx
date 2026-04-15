@@ -6,8 +6,32 @@ import './PrinciplesLibrary.css';
 import { initialPrinciplesData } from '../data/principlesData';
 
 const PrinciplesLibrary = () => {
-  const [data, setData] = useState(initialPrinciplesData);
-  const [activeCategory, setActiveCategory] = useState(initialPrinciplesData[0].type);
+  const [data, setData] = useState(() => {
+    const saved = localStorage.getItem('principles_data');
+    const parsed = saved ? JSON.parse(saved) : initialPrinciplesData;
+    return Array.isArray(parsed) ? parsed : initialPrinciplesData;
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem('principles_data', JSON.stringify(data));
+  }, [data]);
+
+  const [activeCategory, setActiveCategory] = useState(() => {
+    return (data && data.length > 0) ? data[0].type : '';
+  });
+
+  const getCategoryIcon = (type) => {
+    switch (type) {
+      case 'com-bola': return <Activity size={24} />;
+      case 'sem-bola': return <Shield size={24} />;
+      case 'transicao-ofensiva': return <Shuffle size={24} />;
+      case 'transicao-defensiva': return <Shuffle size={24} style={{ transform: 'scaleX(-1)' }} />;
+      case 'bolas-paradas': return <Key size={24} />;
+      case 'organizacao': return <Activity size={24} />;
+      case 'tecnicos': return <FileText size={24} />;
+      default: return <BookOpen size={24} />;
+    }
+  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentEdit, setCurrentEdit] = useState(null);
@@ -105,13 +129,13 @@ const PrinciplesLibrary = () => {
 
       <div className="principles-content">
         <div className="principles-tabs glass-panel">
-          {data.map((cat) => (
+          {data && data.map((cat) => (
             <button
               key={cat.type}
               className={`tab-btn ${activeCategory === cat.type ? 'active' : ''}`}
               onClick={() => setActiveCategory(cat.type)}
             >
-              <div className="tab-icon">{cat.icon}</div>
+              <div className="tab-icon">{getCategoryIcon(cat.type)}</div>
               <span>{cat.category}</span>
             </button>
           ))}

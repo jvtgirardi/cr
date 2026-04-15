@@ -52,11 +52,8 @@ const coachesData = [
   { id: 6, name: 'Selmani Arianit' },
 ];
 
-const mockPlayersByCategory = initialPlayersData.reduce((acc, player) => {
-  if (!acc[player.category]) acc[player.category] = [];
-  acc[player.category].push(player);
-  return acc;
-}, {});
+
+
 
 const initialSessions = [
   {
@@ -100,7 +97,23 @@ const initialSessions = [
 
 const TrainingSessions = () => {
   const { primaryColor, institutionName, logo } = useTheme();
-  const [sessions, setSessions] = useState(initialSessions);
+  const [players] = useState(() => {
+    const saved = localStorage.getItem('players_data');
+    return saved ? JSON.parse(saved) : initialPlayersData;
+  });
+
+  const [coaches] = useState(() => {
+    const saved = localStorage.getItem('coaches_data');
+    return saved ? JSON.parse(saved) : coachesData;
+  });
+  const [sessions, setSessions] = useState(() => {
+    const saved = localStorage.getItem('training_sessions_data');
+    return saved ? JSON.parse(saved) : initialSessions;
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem('training_sessions_data', JSON.stringify(sessions));
+  }, [sessions]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   
@@ -138,12 +151,26 @@ const TrainingSessions = () => {
     localStorage.setItem('training_assessments', JSON.stringify(assessments));
   }, [assessments]);
 
+  const handleSaveAssessments = () => {
+    setAssessments(prev => ({
+      ...prev,
+      ...tempAssessments
+    }));
+    setIsAssessmentModalOpen(false);
+    setAssessingSession(null);
+  };
+
   const [formData, setFormData] = useState({
     date: getTodayStr(),
     category: 'U18',
-    coach: coachesData[0].name,
+    coach: coaches[0]?.name || 'Coach',
     videoUrl: '',
     activities: []
+  });
+
+  const [librarySessions] = useState(() => {
+    const saved = localStorage.getItem('training_library_data');
+    return saved ? JSON.parse(saved) : initialTrainingsLibraryData;
   });
 
   const [modalMode, setModalMode] = useState('add');
@@ -159,6 +186,14 @@ const TrainingSessions = () => {
     selectedPrinciples: []
   });
 
+
+
+  const playersByCategory = players.reduce((acc, player) => {
+    if (!acc[player.category]) acc[player.category] = [];
+    acc[player.category].push(player);
+    return acc;
+  }, {});
+
   const [isActivityPrinciplesModalOpen, setIsActivityPrinciplesModalOpen] = useState(false);
   const [isActivityPlayersModalOpen, setIsActivityPlayersModalOpen] = useState(false);
   const [athleteFilterName, setAthleteFilterName] = useState('');
@@ -166,7 +201,7 @@ const TrainingSessions = () => {
   const [showDrillDropdown, setShowDrillDropdown] = useState(false);
   const [drillSearchTerm, setDrillSearchTerm] = useState('');
 
-  const allPlayersList = Object.entries(mockPlayersByCategory).flatMap(([cat, players]) => players.map(p => ({ ...p, category: cat })));
+  const allPlayersList = Object.entries(playersByCategory).flatMap(([cat, players]) => players.map(p => ({ ...p, category: cat })));
   
   const handlePrint = () => {
     window.print();
@@ -227,7 +262,7 @@ const TrainingSessions = () => {
     setFormData({
       date: getTodayStr(),
       category: 'U18',
-      coach: coachesData[0].name,
+      coach: coaches[0]?.name || 'Coach',
       videoUrl: '',
       activities: []
     });
@@ -288,7 +323,8 @@ const TrainingSessions = () => {
     setCurrentActivity({
       ...currentActivity,
       drillTitle: drill.title,
-      duration: drill.duration || currentActivity.duration
+      duration: drill.duration || currentActivity.duration,
+      selectedPrinciples: drill.principles || []
     });
     setDrillSearchTerm(drill.title);
     setShowDrillDropdown(false);
@@ -358,7 +394,7 @@ const TrainingSessions = () => {
               <span className="filter-label">CATEGORY</span>
               <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} className="glass-select">
                 <option value="All">All Categories</option>
-                {Object.keys(mockPlayersByCategory).map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                {Object.keys(playersByCategory).map(cat => <option key={cat} value={cat}>{cat}</option>)}
               </select>
             </div>
             
@@ -366,7 +402,7 @@ const TrainingSessions = () => {
               <span className="filter-label">COACH</span>
               <select value={filterCoach} onChange={(e) => setFilterCoach(e.target.value)} className="glass-select">
                 <option value="All">All Coaches</option>
-                {coachesData.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                {coaches.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
               </select>
             </div>
 
@@ -787,13 +823,13 @@ const TrainingSessions = () => {
               <div className="form-group">
                 <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>Category</label>
                 <select className="glass-select" value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })}>
-                  {Object.keys(mockPlayersByCategory).map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                  {Object.keys(playersByCategory).map(cat => <option key={cat} value={cat}>{cat}</option>)}
                 </select>
               </div>
               <div className="form-group">
                 <label style={{ display: 'block', marginBottom: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>Lead Coach</label>
                 <select className="glass-select" value={formData.coach} onChange={(e) => setFormData({ ...formData, coach: e.target.value })}>
-                  {coachesData.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                  {coaches.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                 </select>
               </div>
             </div>
@@ -817,7 +853,7 @@ const TrainingSessions = () => {
                   />
                   {showDrillDropdown && (
                     <div className="glass drill-dropdown" style={{ position: 'absolute', top: 'calc(100% + 5px)', left: 0, right: 0, zIndex: 100, maxHeight: '250px', overflowY: 'auto', borderRadius: '16px', backdropFilter: 'blur(20px)' }}>
-                      {initialTrainingsLibraryData
+                      {librarySessions
                         .filter(d => d.title.toLowerCase().includes(drillSearchTerm.toLowerCase()))
                         .map(drill => (
                           <div 
@@ -833,7 +869,7 @@ const TrainingSessions = () => {
                           </div>
                         ))
                       }
-                      {initialTrainingsLibraryData.filter(d => d.title.toLowerCase().includes(drillSearchTerm.toLowerCase())).length === 0 && (
+                      {librarySessions.filter(d => d.title.toLowerCase().includes(drillSearchTerm.toLowerCase())).length === 0 && (
                         <div style={{ padding: '12px 15px', fontSize: '13px', color: 'var(--text-muted)' }}>No drills found. Press enter to use as new title.</div>
                       )}
                     </div>
@@ -966,7 +1002,7 @@ const TrainingSessions = () => {
           </div>
 
           <div style={{ marginTop: '35px', textAlign: 'right' }}>
-            <button className="submit-btn" onClick={() => setIsAssessmentModalOpen(false)} style={{ background: primaryColor, color: '#000', padding: '15px 40px', borderRadius: '15px', fontWeight: 700, fontSize: '16px' }}>
+            <button className="submit-btn" onClick={handleSaveAssessments} style={{ background: primaryColor, color: '#000', padding: '15px 40px', borderRadius: '15px', fontWeight: 700, fontSize: '16px' }}>
               Save Assessments
             </button>
           </div>

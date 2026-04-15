@@ -25,12 +25,29 @@ const Dashboard = () => {
   const { primaryColor, institutionName, directorName, directorPhoto } = useTheme();
   const navigate = useNavigate();
 
+  const [players] = React.useState(() => {
+    const saved = localStorage.getItem('players_data');
+    return saved ? JSON.parse(saved) : initialPlayersData;
+  });
+
+  const [coaches] = React.useState(() => {
+    const saved = localStorage.getItem('coaches_data');
+    return saved ? JSON.parse(saved) : [
+      { name: 'Ilir Selmani', sessions: 86 },
+      { name: 'Ludovic', sessions: 12 },
+      { name: 'Alessandro Rama', sessions: 5 },
+      { name: 'Déborah Bouillane', sessions: 5 },
+    ];
+  });
+
   // Dynamic players by group calculation
   const categories = ['u12', 'u14', 'u16', 'u18', 'u20', 'senior'];
   const chartData = categories.map(cat => ({
     name: cat,
-    value: initialPlayersData.filter(p => p.category.toLowerCase() === cat && p.status === 'Active').length
+    value: players.filter(p => p.category.toLowerCase() === cat && p.status === 'Active').length
   })).filter(item => item.value >= 0); // Keep zeros to show groups
+
+  const sortedCoaches = [...coaches].sort((a, b) => (b.sessions || 0) - (a.sessions || 0)).slice(0, 4);
 
   return (
     <div className="dashboard-page animate-fade-in">
@@ -133,12 +150,7 @@ const Dashboard = () => {
           onClick={() => navigate('/library')}
           style={{ cursor: 'pointer' }}
         >
-          {[
-            { name: 'Ilir Selmani', count: 86 },
-            { name: 'Ludovic', count: 12 },
-            { name: 'Alessandro Rama', count: 5 },
-            { name: 'Déborah Bouillane', count: 5 },
-          ].map((coach, index) => (
+          {sortedCoaches.map((coach, index) => (
             <div key={coach.name} className="activity-item">
               <div className="coach-info">
                 <div className="rank">{index + 1}</div>
@@ -149,12 +161,12 @@ const Dashboard = () => {
                 <div 
                   className="track-progress" 
                   style={{ 
-                    width: `${(coach.count / 86) * 100}%`,
+                    width: `${(coach.sessions / (sortedCoaches[0]?.sessions || 1)) * 100}%`,
                     backgroundColor: primaryColor
                   }}
                 ></div>
               </div>
-              <span className="activity-count">{coach.count}</span>
+              <span className="activity-count">{coach.sessions}</span>
             </div>
           ))}
         </div>

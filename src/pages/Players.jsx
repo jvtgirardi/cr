@@ -26,7 +26,14 @@ const categories = ['All', 'U12', 'U14', 'U16', 'U18', 'U20', 'Senior'];
 
 const Players = () => {
   const { primaryColor } = useTheme();
-  const [players, setPlayers] = useState(initialPlayersData);
+  const [players, setPlayers] = useState(() => {
+    const saved = localStorage.getItem('players_data');
+    return saved ? JSON.parse(saved) : initialPlayersData;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('players_data', JSON.stringify(players));
+  }, [players]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
