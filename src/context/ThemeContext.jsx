@@ -9,7 +9,7 @@ export const ThemeProvider = ({ children }) => {
     return saved !== null ? JSON.parse(saved) : true;
   });
   const [logo, setLogo] = useState(() => localStorage.getItem('theme_logo') || null);
-  const [institutionName, setInstitutionName] = useState(() => localStorage.getItem('theme_institution_name') || 'CoachBoard');
+  const [institutionName, setInstitutionName] = useState(() => localStorage.getItem('theme_institution_name') || 'QR Coach');
 
   const [directorName, setDirectorName] = useState(() => localStorage.getItem('theme_director_name') || 'Coach');
   const [directorPhoto, setDirectorPhoto] = useState(() => localStorage.getItem('theme_director_photo') || null);

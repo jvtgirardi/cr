@@ -81,7 +81,7 @@ const Dashboard = () => {
       <header className="page-header">
         <div>
           <h1 className="welcome-text">{directorName || 'Technical Director'}</h1>
-          <p className="subtitle">Welcome back, {institutionName || 'CoachBoard'}</p>
+          <p className="subtitle">Welcome back, {institutionName || 'QR Coach'}</p>
         </div>
         <div className="user-profile glass" style={{ border: `1px solid ${primaryColor}` }}>
           <span className="premium-badge neon-shadow">Premium</span>

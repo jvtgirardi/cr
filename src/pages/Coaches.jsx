@@ -21,8 +21,8 @@ const date5DaysAgo = new Date(today); date5DaysAgo.setDate(today.getDate() - 5);
 const date20DaysAgo = new Date(today); date20DaysAgo.setDate(today.getDate() - 20);
 
 const coachesData = [
-  { id: 1, name: 'Alessandro Rama', team: 'U20 CoachBoard', category: 'u20', sessions: 5, initial: 'AR', status: 'Active', createdAt: date20DaysAgo.toISOString() },
-  { id: 2, name: 'Deleaval Cyril', team: 'CoachBoard FC', category: 'u14', sessions: 15, initial: 'DC', status: 'Active', createdAt: date5DaysAgo.toISOString() },
+  { id: 1, name: 'Alessandro Rama', team: 'U20 QR Coach', category: 'u20', sessions: 5, initial: 'AR', status: 'Active', createdAt: date20DaysAgo.toISOString() },
+  { id: 2, name: 'Deleaval Cyril', team: 'QR Coach FC', category: 'u14', sessions: 15, initial: 'DC', status: 'Active', createdAt: date5DaysAgo.toISOString() },
   { id: 3, name: 'Ilir Selmani', team: 'AI Interstar', category: 'u20', sessions: 86, initial: 'IS', status: 'Active', createdAt: date20DaysAgo.toISOString() },
   { id: 4, name: 'Ludovic', team: 'Verso Nave', category: 'adults', sessions: 12, initial: 'L', status: 'Active', createdAt: date20DaysAgo.toISOString() },
   { id: 5, name: 'Mazamay Yann', team: 'FC Meyrin', category: 'u18', sessions: 0, initial: 'MY', status: 'Active', createdAt: date20DaysAgo.toISOString() },
